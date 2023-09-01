@@ -1,5 +1,5 @@
 ---
-title: Bosnia 
+title: Traveling to Bosnia for One Week by Car: An Unforgettable Journey 
 description: Explore Bosnia in a week-long road trip, from Sarajevo's rich culture to Mostar's iconic bridges and the natural beauty of Sutjeska Park. Dive into history, cuisine, and breathtaking landscapes.
 slug: bosnia-road-trip-guide
 date: 2022-03-06 00:00:00+0000
@@ -10,8 +10,6 @@ tags:
     - Bosnia
 weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
-
-# Traveling to Bosnia for One Week by Car: An Unforgettable Journey
 
 Bosnia and Herzegovina, often simply referred to as Bosnia, is a captivating blend of Eastern and Western cultures. With its rich history, diverse culture, and breathtaking landscapes, it's emerging as a sought-after travel destination in Europe. If you're considering a road trip to Bosnia, here's a detailed one-week itinerary to help you immerse yourself in its beauty.
 
