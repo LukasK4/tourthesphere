@@ -25,39 +25,47 @@
 
 {{ define "main" }}
 <article class="{{ if .Params.image }}has-image {{ end }}main-article">
+
+    {{ partial "article/components/header" . }}
+
     <section class="article-content">
 
-    {{ .Content }}
-
-
-    {{ with .Resources.GetMatch "itinerary.md" }}
-        <h2 id="itinerary">{{ .Title }}</h2>
         {{ .Content }}
+
+
+        {{ with .Resources.GetMatch "itinerary.md" }}
+            <h2 id="itinerary">{{ .Title }}</h2>
+            {{ .Content }}
+        {{ end }}
+
+        {{ with .Resources.GetMatch "facts.md" }}
+            <h2 id="facts">{{ .Title }}</h2>
+            {{ .Content }}
+        {{ end }}
+
+        {{ with .Resources.GetMatch "traveltips.md" }}
+            <h2 id="travel-tips">{{ .Title }}</h2>
+            {{ .Content }}
+        {{ end }}
+
+        {{ with .Resources.GetMatch "food.md" }}
+            <h2 id="food">{{ .Title }}</h2>
+            {{ .Content }}
+        {{ end }}
+
+        {{ with .Resources.GetMatch "funfacts.md" }}
+            <h2 id="fun-facts">{{ .Title }}</h2>
+            {{ .Content }}
+        {{ end }}
+
+    </section>
+
+        
+    {{ partial "article/components/footer" . }}
+
+    {{ if or .Params.math .Site.Params.article.math }}
+        {{ partialCached "article/components/math.html" . }}
     {{ end }}
-
-    {{ with .Resources.GetMatch "facts.md" }}
-        <h2 id="facts">{{ .Title }}</h2>
-        {{ .Content }}
-    {{ end }}
-
-    {{ with .Resources.GetMatch "traveltips.md" }}
-        <h2 id="travel-tips">{{ .Title }}</h2>
-        {{ .Content }}
-    {{ end }}
-
-    {{ with .Resources.GetMatch "food.md" }}
-        <h2 id="food">{{ .Title }}</h2>
-        {{ .Content }}
-    {{ end }}
-
-    {{ with .Resources.GetMatch "funfacts.md" }}
-        <h2 id="fun-facts">{{ .Title }}</h2>
-        {{ .Content }}
-    {{ end }}
-
-</section>
-
-    
 
 </article>
 
