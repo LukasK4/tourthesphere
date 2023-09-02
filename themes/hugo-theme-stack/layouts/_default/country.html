@@ -1,0 +1,123 @@
+{{ define "body-class" }}
+    article-page
+    {{/* 
+        Enable the right sidebar if
+            - Widget different from 'TOC' is enabled
+            - TOC is enabled and not empty
+    */}}
+    {{- $HasWidgetNotTOC := false -}}
+    {{- $TOCWidgetEnabled := false -}}
+    {{- range .Site.Params.widgets.page -}}
+        {{- if ne .type "toc" -}}
+            {{ $HasWidgetNotTOC = true -}}
+        {{- else -}}
+            {{ $TOCWidgetEnabled = true -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $TOCManuallyDisabled := eq .Params.toc false -}}
+    {{- $TOCEnabled := and (not $TOCManuallyDisabled) $TOCWidgetEnabled -}}
+    {{- $hasTOC := ge (len .TableOfContents) 100 -}}
+    {{- .Scratch.Set "TOCEnabled" (and $TOCEnabled $hasTOC) -}}
+    
+    {{- .Scratch.Set "hasWidget" (or $HasWidgetNotTOC (and $TOCEnabled $hasTOC)) -}}
+{{ end }}
+
+{{ define "main" }}
+<article class="{{ if .Params.image }}has-image {{ end }}main-article">
+    <section class="article-content">
+
+    {{ .Content }}
+
+
+    {{ with .Resources.GetMatch "itinerary.md" }}
+        <h2 id="itinerary">{{ .Title }}</h2>
+        {{ .Content }}
+    {{ end }}
+
+    {{ with .Resources.GetMatch "facts.md" }}
+        <h2 id="facts">{{ .Title }}</h2>
+        {{ .Content }}
+    {{ end }}
+
+    {{ with .Resources.GetMatch "traveltips.md" }}
+        <h2 id="travel-tips">{{ .Title }}</h2>
+        {{ .Content }}
+    {{ end }}
+
+    {{ with .Resources.GetMatch "food.md" }}
+        <h2 id="food">{{ .Title }}</h2>
+        {{ .Content }}
+    {{ end }}
+
+    {{ with .Resources.GetMatch "funfacts.md" }}
+        <h2 id="fun-facts">{{ .Title }}</h2>
+        {{ .Content }}
+    {{ end }}
+
+</section>
+
+    
+
+</article>
+
+{{/* Standard content */}}
+
+    {{ if .Params.links }}
+        {{ partial "article/components/links" . }}
+    {{ end }}
+
+    {{ partial "article/components/related-content" . }}
+     
+    {{ if not (eq .Params.comments false) }}
+        {{ partial "comments/include" . }}
+    {{ end }}
+
+    {{ partialCached "footer/footer" . }}
+
+    {{ partialCached "article/components/photoswipe" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+<aside class="sidebar right-sidebar sticky">
+    <section class="widget archives">
+        <div class="widget-icon">
+            {{ partial "helper/icon" "hash" }}
+        </div>
+        <h2 class="widget-title section-title">{{ T "article.tableOfContents" }}</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+                <ol>
+                  <li><a href="#itinerary">
+                    {{ with .Resources.GetMatch "itinerary.md" }}
+                        {{ .Title }}
+                    {{end}}
+                  </a></li>
+                  <li><a href="#facts">
+                    {{ with .Resources.GetMatch "facts.md" }}
+                        {{ .Title }}
+                    {{end}}
+                  </a></li>
+                  <li><a href="#travel-tips">
+                    {{ with .Resources.GetMatch "traveltips.md" }}
+                        {{ .Title }}
+                    {{end}}
+                  </a></li>
+                  <li><a href="#food">
+                    {{ with .Resources.GetMatch "food.md" }}
+                        {{ .Title }}
+                    {{end}}
+                  </a></li>
+                  <li><a href="#fun-facts">
+                    {{ with .Resources.GetMatch "funfacts.md" }}
+                        {{ .Title }}
+                    {{end}}
+                  </a></li>
+                </ol>
+              </nav>
+        </div>
+    </section>
+
+</aside>
+{{ end }}
